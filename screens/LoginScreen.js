@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { Button, Input } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import DropdownAlertContext from "../contexts/DropdownAlertContext";
+import * as EmailValidator from "email-validator";
 
 export default function LoginScreen() {
   const fieldText = "Enter your username + password";
@@ -31,6 +32,23 @@ export default function LoginScreen() {
   }, []);
   return (
     <View>
+      <Button
+        onPress={
+          EmailValidator.validate(username)
+            ? !buttonPressed
+              ? () => {
+                  alert(
+                    `Your email is: ${username}. There is no account associated with this email. Please press this button again to create a new account.`
+                  );
+                  setButtonPress(true);
+                }
+              : () => {
+                  navigation.push("TodoListStackNavigator");
+                }
+            : () => {}
+        }
+        title={"Sign In"}
+      />
       <Input
         value={password}
         secureTextEntry
