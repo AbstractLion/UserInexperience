@@ -1,22 +1,58 @@
 import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import { Overlay, Button, Icon, Input } from "react-native-elements";
-import DropdownAlertContext from "../contexts/DropdownAlert";
-import TodoItemsContext from "../contexts/TodoItems";
+import DropdownAlertContext from "../contexts/DropdownAlertContext";
+import TodoItemsContext from "../contexts/TodoItemsContext";
+import UserContext from "../contexts/UserContext";
+import RNPickerSelect from "react-native-picker-select";
 
 export default function TodoListDetailsScreen({ navigation, route }) {
   const [todoId, setTodoId] = useState("Enter the todo id here");
   const [isOverlayVisible, setOverlayVisibility] = useState(false);
+  const [
+    isDeletionPayOverlayVisible,
+    setDeletionPayOverlayVisibility,
+  ] = useState(false);
   const { todos, setTodos } = useContext(TodoItemsContext);
   const { dropdownAlertRef } = useContext(DropdownAlertContext);
+  const { user, setUser } = useContext(UserContext);
 
   function deleteTodo() {
+    if (user.remainingDeletions === 0) {
+      setDeletionPayOverlayVisibility(true);
+      return;
+    }
     const newTodos = todos.filter((todo) => todo.id !== todoId);
     setTodos(newTodos);
+    setUser({ ...user, remainingDeletions: 0 });
+    dropdownAlertRef.current.alertWithType(
+      "error",
+      "You just eliminated an innocent todo.",
+      "I hope you feel terrible about destroying a poor, innocent todo that did not deserve death.\n" +
+        `"Todo #${todoId}", you shall always be remembered.`
+    );
   }
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
+      <Overlay
+        isVisible={isDeletionPayOverlayVisible}
+        onBackdropPress={() => setDeletionPayOverlayVisibility(false)}
+        children={
+          <View style={{ flex: -1 }}>
+            <Text>
+              Out of deletions? Not to worry! Unlike other apps, our app allows
+              to you purchase as many deletions as you want!
+            </Text>
+            <Button
+              title="Buy 10 deletions for the cheap, cheap, price of $25!"
+              onPress={() => {
+                alert("TODO: Implement Billing");
+              }}
+            />
+          </View>
+        }
+      />
       <Overlay
         isVisible={isOverlayVisible}
         onBackdropPress={() => setOverlayVisibility(false)}
@@ -28,12 +64,6 @@ export default function TodoListDetailsScreen({ navigation, route }) {
                 onPress={() => {
                   deleteTodo();
                   setOverlayVisibility(false);
-                  dropdownAlertRef.current.alertWithType(
-                    "error",
-                    "You just eliminated an innocent todo.",
-                    "I hope you feel terrible about destroying a poor, innocent todo that did not deserve death.\n" +
-                      `"Todo #${todoId}", you shall always be remembered.`
-                  );
                 }}
               >
                 <Text>yes</Text>
@@ -93,6 +123,41 @@ export default function TodoListDetailsScreen({ navigation, route }) {
           />
         }
       />
+      <View
+        style={{
+          flex: -1,
+          flexDirection: "row",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <Text>You have </Text>
+        <RNPickerSelect
+          textInputProps={{ color: "black" }}
+          placeholder={
+            user.remainingDeletions
+              ? { label: "1", value: "1" }
+              : { label: "0", value: "0" }
+          }
+          onValueChange={(value) => {
+            setUser({ ...user, remainingDeletions: parseInt(value) || 0 });
+          }}
+          items={
+            user.remainingDeletions
+              ? [{ label: "0", value: "0" }]
+              : [{ label: "1", value: "1" }]
+          }
+        />
+        <Text> deletions left.</Text>
+      </View>
+      <View style={{ flex: -1, flexDirection: "row" }}>
+        <Text>You can buy more deletions by pressing </Text>
+        <TouchableHighlight
+          onPress={() => setDeletionPayOverlayVisibility(true)}
+        >
+          <Text>here.</Text>
+        </TouchableHighlight>
+      </View>
     </View>
   );
 }
