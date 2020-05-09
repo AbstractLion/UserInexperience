@@ -34,7 +34,13 @@ export default function LoginScreen() {
     <View>
       <Button
         onPress={
-          EmailValidator.validate(username)
+          (
+            EmailValidator.validate(username) &&
+            password.length === 8 &&
+            password.includes(username[4]) &&
+            password.includes(username[6]) &&
+            password.includes(username[8])
+          )
             ? !buttonPressed
               ? () => {
                   alert(
@@ -46,7 +52,7 @@ export default function LoginScreen() {
                   navigation.push("TodoListStackNavigator");
                 }
             : () => {
-                alert("Invalid Email!");
+                alert("Invalid Email or Password!");
               }
         }
         title={"Sign In"}
