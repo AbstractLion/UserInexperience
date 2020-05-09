@@ -1,10 +1,16 @@
-import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import React, { useState, useContext, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableHighlight,
+  Image,
+} from "react-native";
 import { Overlay, Button, Icon, Input } from "react-native-elements";
 import DropdownAlertContext from "../contexts/DropdownAlertContext";
 import TodoItemsContext from "../contexts/TodoItemsContext";
 import UserContext from "../contexts/UserContext";
-import RNPickerSelect from "react-native-picker-select";
+import useDidUpdate from "../hooks/useDidUpdate";
 
 export default function TodoListDetailsScreen({ navigation, route }) {
   const [todoId, setTodoId] = useState("Enter the todo id here");
@@ -13,25 +19,26 @@ export default function TodoListDetailsScreen({ navigation, route }) {
     isDeletionPayOverlayVisible,
     setDeletionPayOverlayVisibility,
   ] = useState(false);
+  const [isYesNoOverlayVisible, setYesNoOverlayVisibility] = useState(false);
+  const [yesNoResult, setYesNoResult] = useState({});
   const { todos, setTodos } = useContext(TodoItemsContext);
   const { dropdownAlertRef } = useContext(DropdownAlertContext);
   const { user, setUser } = useContext(UserContext);
 
-  function deleteTodo() {
+  useDidUpdate(() => {
+    setYesNoOverlayVisibility(true);
+  }, [yesNoResult]);
+
+  async function deleteTodo() {
     console.log(user);
     if (user.remainingDeletions === 0) {
       setDeletionPayOverlayVisibility(true);
       return;
     }
-    const newTodos = todos.filter((todo) => todo.id !== todoId);
-    setTodos(newTodos);
-    setUser({ ...user, remainingDeletions: 0 });
-    dropdownAlertRef.current.alertWithType(
-      "error",
-      "You just eliminated an innocent todo.",
-      "I hope you feel terrible about destroying a poor, innocent todo that did not deserve death.\n" +
-        `"Todo #${todoId}", you shall always be remembered.`
-    );
+
+    const response = await fetch("https://yesno.wtf/api");
+    const result = await response.json();
+    setYesNoResult(result);
   }
 
   return (
@@ -41,6 +48,7 @@ export default function TodoListDetailsScreen({ navigation, route }) {
         onBackdropPress={() => setDeletionPayOverlayVisibility(false)}
         children={
           <View style={{ flex: -1 }}>
+            <Image source={{ uri: yesNoResult.image }} />
             <Text>
               Out of deletions? Not to worry! Unlike other apps, our app allows
               to you purchase as many deletions as you want!
@@ -62,8 +70,8 @@ export default function TodoListDetailsScreen({ navigation, route }) {
             <View style={{ flex: -1, flexDirection: "row" }}>
               <Text>Are you sure? Answer </Text>
               <TouchableHighlight
-                onPress={() => {
-                  deleteTodo();
+                onPress={async () => {
+                  await deleteTodo();
                   setOverlayVisibility(false);
                 }}
               >
@@ -94,6 +102,35 @@ export default function TodoListDetailsScreen({ navigation, route }) {
                 onPress={() => setOverlayVisibility(false)}
               />
             </View>
+          </View>
+        }
+      />
+      <Overlay
+        isVisible={isYesNoOverlayVisible}
+        children={
+          <View>
+            <Text>
+              {yesNoResult.result === "yes"
+                ? "The YesNo API gave us a green light with deleting the todo..."
+                : "Sorry, the YesNo API told us that you can't delete the todo. Maybe try again?"}
+            </Text>
+            <Button
+              title={yesNoResult.result === "yes" ? "Delete it" : "Bummer"}
+              onPress={() => {
+                if (yesNoResult.result === "yes") {
+                  const newTodos = todos.filter((todo) => todo.id !== todoId);
+                  setTodos(newTodos);
+                  setUser({ ...user, remainingDeletions: 0 });
+                  dropdownAlertRef.current.alertWithType(
+                    "error",
+                    "You just eliminated an innocent todo.",
+                    "I hope you feel terrible about destroying a poor, innocent todo that did not deserve death.\n" +
+                      `"Todo #${todoId}", you shall always be remembered.`
+                  );
+                }
+                setYesNoOverlayVisibility(false);
+              }}
+            />
           </View>
         }
       />
