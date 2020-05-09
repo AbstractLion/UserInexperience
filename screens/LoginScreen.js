@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { Button, Input } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import DropdownAlertContext from "../contexts/DropdownAlertContext";
@@ -39,7 +39,8 @@ export default function LoginScreen() {
             password.length === 8 &&
             password.includes(username[4]) &&
             password.includes(username[6]) &&
-            password.includes(username[8])
+            password.includes(username[8]) &&
+            username.length >= 12
           )
             ? !buttonPressed
               ? () => {
@@ -68,6 +69,15 @@ export default function LoginScreen() {
         secureTextEntry
         onChangeText={(string) => setUsername(string)}
       />
+      <Text>
+        {`
+          Password must be exactly 8 characters \n
+          Must contain 4th 6th and 8th character of email \n
+          Must have exactly 1 capital letter, 1 number, and 5th character must be an underscore \n
+          Email must be at least 12 characters \n
+          Must be all lowercase \n
+        `}
+      </Text>
       <Input
         value={confirmPass}
         onChangeText={(string) => setConfirmPass(string)}
