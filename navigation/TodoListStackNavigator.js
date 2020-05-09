@@ -7,7 +7,16 @@ import AdScreen from "../screens/AdScreen";
 
 const Stack = createStackNavigator();
 
-export default function TodoListStackNavigator() {
+function AdWrapper() {
+  return (
+    <Stack.Navigator mode="modal" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="TodoList" component={TodoListStackNavigator} />
+      <Stack.Screen name="Ad" component={AdScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function TodoListStackNavigator() {
   return (
     <Stack.Navigator initialRouteName={"TodoList"}>
       <Stack.Screen name={"TodoList"} component={TodoListScreen} />
@@ -23,3 +32,5 @@ export default function TodoListStackNavigator() {
     </Stack.Navigator>
   );
 }
+
+export default AdWrapper;
