@@ -32,6 +32,9 @@ export default function App() {
           <Stack.Screen
             name={"TodoListStackNavigator"}
             component={TodoListStackNavigator}
+            options={{
+              headerShown: false,
+            }}
           />
         </Stack.Navigator>
       </TodoItemsContext.Provider>

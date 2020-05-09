@@ -15,10 +15,9 @@ const actions = [
   },
 ];
 
-export default function TodoListScreen() {
+export default function TodoListScreen({ navigation, route }) {
   const [isOverlayVisible, setOverlayVisibility] = useState(false);
   const { todos } = useContext(TodoItemsContext);
-  const navigation = useNavigation();
 
   return (
     <View style={{ flex: 1 }}>
@@ -43,7 +42,7 @@ export default function TodoListScreen() {
               </Text>
               <TouchableHighlight
                 onPress={() => {
-                  console.log("hi");
+                  navigation.navigate("TodoListItemDelete");
                 }}
               >
                 <Text> here </Text>

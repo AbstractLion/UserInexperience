@@ -1,12 +1,10 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React from "react";
+import { View, Text } from "react-native";
 
-export default function TodoListDetailsScreen() {
+export default function TodoListDetailsScreen({ navigation, route }) {
   return (
     <View>
-      <Text>
-        Todo List Details
-      </Text>
+      <Text>{JSON.stringify(route.params)}</Text>
     </View>
   );
 }
