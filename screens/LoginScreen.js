@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Button, Input } from "react-native-elements";
-import {useNavigation} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function LoginScreen() {
   const fieldText = "Enter your username + password";
@@ -36,13 +36,13 @@ export default function LoginScreen() {
           !buttonPressed
             ? () => {
                 alert(
-                  `Your email is: ${username}. Please press this button again to sign in.`
+                  `Your email is: ${username}. There is no account associated with this email. Please press this button again to create a new account.`
                 );
                 setButtonPress(true);
               }
             : () => {
-              navigation.push("TodoListStackNavigator");
-            }
+                navigation.push("TodoListStackNavigator");
+              }
         }
         title={"Sign In"}
       />

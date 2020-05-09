@@ -30,6 +30,12 @@ export default function App() {
   ]);
   const dropdownAlertRef = useRef();
 
+  setInterval(() => {
+    for (let i = 0; i < 3; i++) {
+      alert("A known error has occurred. Please fix it.")
+    }
+  }, 60*1000)
+
   return (
     <NavigationContainer>
       {welcomeScreenDone ? (
