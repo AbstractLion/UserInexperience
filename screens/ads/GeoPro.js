@@ -26,24 +26,30 @@ export default function GeoProAd() {
             region: item.region,
             population: item.population,
           };
-          arr.push({value: item.name});
+          arr.push({ value: item.name });
         }
         setCountryList(arr);
         setCountries(obj);
       });
   }, []);
   return (
-    <View style={{margin:40}}>
+    <View style={{ margin: 40 }}>
       <Text>
         Failing Geography? No problem! Our phone app will let you cheat on your
         geography tests at ease. Test a demo below!
       </Text>
-      <Dropdown label={"Countries"} data={countryList} onChangeText={(string) => setCurrentCountry(string)}/>
-      <View style={{flex: 1, alignItems: 'center', margin: 30}}>
-        <Text>Capital: {countries[currentCountry].capital}</Text>
-        <Text>Region: {countries[currentCountry].region}</Text>
-        <Text>Population: {countries[currentCountry].population}</Text>
-      </View>
+      <Dropdown
+        label={"Countries"}
+        data={countryList}
+        onChangeText={(string) => setCurrentCountry(string)}
+      />
+      {countries ? (
+        <View style={{ flex: 1, alignItems: "center", margin: 30 }}>
+          <Text>Capital: {countries[currentCountry].capital}</Text>
+          <Text>Region: {countries[currentCountry].region}</Text>
+          <Text>Population: {countries[currentCountry].population}</Text>
+        </View>
+      ) : null}
     </View>
   );
 }
