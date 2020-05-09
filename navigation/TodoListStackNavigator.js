@@ -18,7 +18,10 @@ function AdWrapper() {
 
 function TodoListStackNavigator() {
   return (
-    <Stack.Navigator initialRouteName={"TodoList"}>
+    <Stack.Navigator
+      initialRouteName={"TodoList"}
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name={"TodoList"} component={TodoListScreen} />
       <Stack.Screen
         name={"TodoListItemDetails"}
@@ -28,7 +31,6 @@ function TodoListStackNavigator() {
         name="TodoListItemDelete"
         component={TodoListItemDeleteScreen}
       />
-      <Stack.Screen name="Ad" component={AdScreen} />
     </Stack.Navigator>
   );
 }

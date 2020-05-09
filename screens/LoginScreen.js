@@ -1,89 +1,104 @@
-import React, { useContext, useEffect, useState } from "react";
-import { View, Text } from "react-native";
-import { Button, Input } from "react-native-elements";
-import { useNavigation } from "@react-navigation/native";
-import DropdownAlertContext from "../contexts/DropdownAlertContext";
-import * as EmailValidator from "email-validator";
+import React, { useEffect, useRef, useState } from "react";
+import { View, Text, TouchableHighlight } from "react-native";
+import { Button, Icon, Input } from "react-native-elements";
 
-export default function LoginScreen() {
-  const fieldText = "Enter your username + password";
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState(
-    ""
-  );
-  const [confirmPass, setConfirmPass] = useState(
-    "Please Enter And Confirm Your Email And Password"
-  );
-  const { dropdownAlertRef } = useContext(DropdownAlertContext);
-  const [buttonPressed, setButtonPress] = useState(false);
-  const navigation = useNavigation();
+export default function LoginScreen({ navigation }) {
+  const [errors, setErrors] = useState([]);
+  const [isEmailDisabled, setIsEmailDisabled] = useState(true);
+  const [isPasswordDisabled, setIsPasswordDisabled] = useState(true);
+  const [isEmailEmpty, setIsEmailEmpty] = useState(false);
+  const [isPasswordEmpty, setIsPasswordEmpty] = useState(false);
+
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
+
   useEffect(() => {
-    setInterval(() => {
-      dropdownAlertRef.current?.alertWithType(
-        "error",
-        "A known error has occurred.",
-        "Please fix it."
-      );
-    }, 50 * 1000);
+    if (!isEmailDisabled) emailInputRef.current?.focus();
+  }, [isEmailDisabled]);
 
-    setInterval(() => {
-      navigation.navigate("Ad");
-    }, 60 * 1000);
-  }, []);
+  useEffect(() => {
+    if (!isPasswordDisabled) passwordInputRef.current?.focus();
+  }, [isPasswordDisabled]);
+
   return (
-    <View>
-      <Button
-        onPress={
-          (
-            EmailValidator.validate(username) &&
-            password === confirmPass &&
-            password.length === 8 &&
-            password.includes(username[4]) &&
-            password.includes(username[6]) &&
-            password.includes(username[8]) &&
-            username.length >= 12
-          )
-            ? !buttonPressed
-              ? () => {
-                  alert(
-                    `Your email is: ${username}. There is no account associated with this email. Please press this button again to create a new account.`
-                  );
-                  setButtonPress(true);
-                }
-              : () => {
-                  navigation.push("TodoListStackNavigator");
-                }
-            : () => {
-                alert("Invalid Email or Password!");
-              }
+    <View style={{ flex: 1, padding: 20 }}>
+      <TouchableHighlight
+        onPress={() => {
+          const errors = [];
+          if (!isEmailEmpty) errors.push("Email must not be empty.");
+          if (!isPasswordEmpty) errors.push("Password must not be empty.");
+          if (errors.length === 0) {
+            setErrors([
+              <>
+                <Text>Account not found in our system.</Text>
+                <View style={{ flex: -1, flexDirection: "row" }}>
+                  <Text>Don't have an account? </Text>
+                  <Text style={{ textDecoration: "underline" }}>Click </Text>
+                  <TouchableHighlight
+                    onPress={() => {
+                      navigation.navigate("Register");
+                    }}
+                  >
+                    <Text>here</Text>
+                  </TouchableHighlight>
+                  <Text> to create one.</Text>
+                </View>
+              </>,
+            ]);
+          } else {
+            setErrors(
+              errors.map((error) => (
+                <Text style={{ color: "red", marginTop: 10 }}>{error}</Text>
+              ))
+            );
+          }
+        }}
+      >
+        <Text style={{ fontSize: 30, fontWeight: "bold", textAlign: "center" }}>
+          Login
+        </Text>
+      </TouchableHighlight>
+      <Input
+        label="Email"
+        disabled={isEmailDisabled}
+        ref={emailInputRef}
+        onChangeText={(email) => {
+          setIsEmailEmpty(email.length > 0);
+        }}
+        leftIcon={
+          <Icon
+            name="email"
+            type="material-community"
+            onPress={() => {
+              setIsEmailDisabled(false);
+            }}
+          />
         }
-        title={"Sign In"}
+        onBlur={() => setIsEmailDisabled(true)}
       />
       <Input
-        value={password}
-        placeholder={"THE PASSWORD"}
-        secureTextEntry
-        onChangeText={(string) => setPassword(string)}
+        label="Password"
+        disabled={isPasswordDisabled}
+        ref={passwordInputRef}
+        onChangeText={(password) => {
+          setIsPasswordEmpty(password.length > 0);
+        }}
+        leftIcon={
+          <Icon
+            name="lock"
+            type="material-community"
+            onPress={() => {
+              setIsPasswordDisabled(false);
+            }}
+          />
+        }
+        onBlur={() => setIsPasswordDisabled(true)}
       />
-      <Input
-        value={username}
-        placeholder={"Your email"}
-        secureTextEntry
-        onChangeText={(string) => setUsername(string)}
+      <Button
+        title="Login"
+        onPress={() => alert("This login button may or may not be working.")}
       />
-      <Text>
-        {`
-          Password must be exactly 8 characters \n
-          Must contain 4th 6th and 8th character of email \n
-          Must have exactly 1 capital letter, 1 number, and 5th character must be an underscore \n
-          Email must be at least 12 characters \n
-          Must be all lowercase \n
-        `}
-      </Text>
-      <Input
-        value={confirmPass}
-        onChangeText={(string) => setConfirmPass(string)}
-      />
+      {errors}
     </View>
   );
 }
