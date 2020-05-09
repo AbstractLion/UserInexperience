@@ -26,9 +26,9 @@ function _renderSlide({item, index, dimensions}) {
   )
 }
 
-export default function IntroScreen() {
+export default function IntroScreen({onDone}) {
   return (
-    <AppIntroSlider data={slides} showSkipButton={true} showPrevButton={true} renderItem={_renderSlide}/>
+    <AppIntroSlider data={slides} showSkipButton={true} showPrevButton={true} renderItem={_renderSlide} onDone={onDone}/>
   )
 }
 

@@ -5,10 +5,12 @@ import TodoItemsContext from "./contexts/TodoItems";
 import TodoListStackNavigator from "./navigation/TodoListStackNavigator";
 import { createStackNavigator } from "@react-navigation/stack";
 import cuid from "cuid";
+import IntroScreen from "./screens/IntroScreen";
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [welcomeScreenDone, setWelcomeScreenDone] = useState(false);
   const [todos, setTodos] = useState([
     {
       name: "Example To-do",
@@ -26,18 +28,21 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <StatusBar barStyle={"dark"} />
-      <TodoItemsContext.Provider value={{ todos, setTodos }}>
-        <Stack.Navigator initialRouteName={"TodoListStackNavigator"}>
-          <Stack.Screen
-            name={"TodoListStackNavigator"}
-            component={TodoListStackNavigator}
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack.Navigator>
-      </TodoItemsContext.Provider>
+      {welcomeScreenDone ? (
+        <>
+          <StatusBar barStyle={"dark"} />
+          <TodoItemsContext.Provider value={{ todos, setTodos }}>
+            <Stack.Navigator initialRouteName={"TodoListStackNavigator"}>
+              <Stack.Screen
+                name={"TodoListStackNavigator"}
+                component={TodoListStackNavigator}
+              />
+            </Stack.Navigator>
+          </TodoItemsContext.Provider>
+        </>
+      ) : (
+        <IntroScreen onDone={() => setWelcomeScreenDone(true)} />
+      )}
     </NavigationContainer>
   );
 }
