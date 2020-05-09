@@ -9,7 +9,7 @@ export default function LoginScreen() {
   const fieldText = "Enter your username + password";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState(
-    "Please Enter And Confirm Your Email And Password"
+    ""
   );
   const [confirmPass, setConfirmPass] = useState(
     "Please Enter And Confirm Your Email And Password"
@@ -36,6 +36,7 @@ export default function LoginScreen() {
         onPress={
           (
             EmailValidator.validate(username) &&
+            password === confirmPass &&
             password.length === 8 &&
             password.includes(username[4]) &&
             password.includes(username[6]) &&
@@ -60,6 +61,7 @@ export default function LoginScreen() {
       />
       <Input
         value={password}
+        placeholder={"THE PASSWORD"}
         secureTextEntry
         onChangeText={(string) => setPassword(string)}
       />
