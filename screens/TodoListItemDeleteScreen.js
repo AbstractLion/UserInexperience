@@ -30,7 +30,6 @@ export default function TodoListDetailsScreen({ navigation, route }) {
   }, [yesNoResult]);
 
   async function deleteTodo() {
-    console.log(user);
     if (user.remainingDeletions === 0) {
       setDeletionPayOverlayVisibility(true);
       return;
@@ -38,6 +37,7 @@ export default function TodoListDetailsScreen({ navigation, route }) {
 
     const response = await fetch("https://yesno.wtf/api");
     const result = await response.json();
+    console.log(result);
     setYesNoResult(result);
   }
 
@@ -48,7 +48,6 @@ export default function TodoListDetailsScreen({ navigation, route }) {
         onBackdropPress={() => setDeletionPayOverlayVisibility(false)}
         children={
           <View style={{ flex: -1 }}>
-            <Image source={{ uri: yesNoResult.image }} />
             <Text>
               Out of deletions? Not to worry! Unlike other apps, our app allows
               to you purchase as many deletions as you want!
@@ -107,17 +106,24 @@ export default function TodoListDetailsScreen({ navigation, route }) {
       />
       <Overlay
         isVisible={isYesNoOverlayVisible}
+        onBackdropPress={() => setYesNoOverlayVisibility(false)}
         children={
-          <View>
+          <View style={{ flex: -1, alignItems: "center" }}>
             <Text>
-              {yesNoResult.result === "yes"
-                ? "The YesNo API gave us a green light with deleting the todo..."
+              {yesNoResult.answer === "yes"
+                ? "The YesNo API gave us a green light with deleting the todo."
                 : "Sorry, the YesNo API told us that you can't delete the todo. Maybe try again?"}
             </Text>
+            <Image
+              source={{
+                uri: yesNoResult.image,
+              }}
+              style={{ width: 300, height: 300, margin: 20 }}
+            />
             <Button
-              title={yesNoResult.result === "yes" ? "Delete it" : "Bummer"}
+              title={yesNoResult.answer === "yes" ? "Delete it" : "Bummer"}
               onPress={() => {
-                if (yesNoResult.result === "yes") {
+                if (yesNoResult.answer === "yes") {
                   const newTodos = todos.filter((todo) => todo.id !== todoId);
                   setTodos(newTodos);
                   setUser({ ...user, remainingDeletions: 0 });
@@ -155,6 +161,7 @@ export default function TodoListDetailsScreen({ navigation, route }) {
           <Icon
             name="trash"
             type="entypo"
+            color="white"
             onPress={() => {
               setOverlayVisibility(true);
             }}
