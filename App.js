@@ -8,6 +8,7 @@ import cuid from "cuid";
 import IntroScreen from "./screens/IntroScreen";
 import DropdownAlertContext from "./contexts/DropdownAlert";
 import DropdownAlert from "react-native-dropdownalert";
+import LoginScreen from "./screens/LoginScreen";
 
 const Stack = createStackNavigator();
 
@@ -36,7 +37,11 @@ export default function App() {
           <StatusBar barStyle={"dark"} />
           <DropdownAlertContext.Provider value={{ dropdownAlertRef }}>
             <TodoItemsContext.Provider value={{ todos, setTodos }}>
-              <Stack.Navigator initialRouteName={"TodoListStackNavigator"}>
+              <Stack.Navigator initialRouteName={"LoginScreen"}>
+                <Stack.Screen
+                  name={"LoginScreen"}
+                  component={LoginScreen}
+                />
                 <Stack.Screen
                   name={"TodoListStackNavigator"}
                   component={TodoListStackNavigator}
