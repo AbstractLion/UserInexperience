@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import { Button, Input } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import * as EmailValidator from "email-validator";
 
 export default function LoginScreen() {
   const fieldText = "Enter your username + password";
@@ -16,6 +17,23 @@ export default function LoginScreen() {
   const navigation = useNavigation();
   return (
     <View>
+      <Button
+        onPress={
+          EmailValidator.validate(username)
+            ? !buttonPressed
+              ? () => {
+                  alert(
+                    `Your email is: ${username}. There is no account associated with this email. Please press this button again to create a new account.`
+                  );
+                  setButtonPress(true);
+                }
+              : () => {
+                  navigation.push("TodoListStackNavigator");
+                }
+            : ()=>{}
+        }
+        title={"Sign In"}
+      />
       <Input
         value={password}
         secureTextEntry
@@ -30,21 +48,6 @@ export default function LoginScreen() {
       <Input
         value={confirmPass}
         onChangeText={(string) => setConfirmPass(string)}
-      />
-      <Button
-        onPress={
-          !buttonPressed
-            ? () => {
-                alert(
-                  `Your email is: ${username}. There is no account associated with this email. Please press this button again to create a new account.`
-                );
-                setButtonPress(true);
-              }
-            : () => {
-                navigation.push("TodoListStackNavigator");
-              }
-        }
-        title={"Sign In"}
       />
     </View>
   );
