@@ -30,7 +30,9 @@ export default function LoginScreen() {
               : () => {
                   navigation.push("TodoListStackNavigator");
                 }
-            : ()=>{}
+            : () => {
+                alert("Invalid Email!");
+              }
         }
         title={"Sign In"}
       />
