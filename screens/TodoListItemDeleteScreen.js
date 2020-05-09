@@ -18,6 +18,7 @@ export default function TodoListDetailsScreen({ navigation, route }) {
   const { user, setUser } = useContext(UserContext);
 
   function deleteTodo() {
+    console.log(user);
     if (user.remainingDeletions === 0) {
       setDeletionPayOverlayVisibility(true);
       return;
@@ -132,22 +133,15 @@ export default function TodoListDetailsScreen({ navigation, route }) {
         }}
       >
         <Text>You have </Text>
-        <RNPickerSelect
-          textInputProps={{ color: "black" }}
-          placeholder={
-            user.remainingDeletions
-              ? { label: "1", value: "1" }
-              : { label: "0", value: "0" }
-          }
-          onValueChange={(value) => {
-            setUser({ ...user, remainingDeletions: parseInt(value) || 0 });
+        <TouchableHighlight
+          onPress={() => {
+            if (user.remainingDeletions === 0) {
+              setUser({ ...user, remainingDeletions: 1 });
+            }
           }}
-          items={
-            user.remainingDeletions
-              ? [{ label: "0", value: "0" }]
-              : [{ label: "1", value: "1" }]
-          }
-        />
+        >
+          <Text>{user.remainingDeletions}</Text>
+        </TouchableHighlight>
         <Text> deletions left.</Text>
       </View>
       <View style={{ flex: -1, flexDirection: "row" }}>
