@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
-import { Input } from "react-native-elements";
+import { Button, Icon, Input } from "react-native-elements";
+import DropdownAlert from "react-native-dropdownalert";
 
 export default function TodoListDetailsScreen({ navigation, route }) {
   const [todoId, setTodoId] = useState("Enter the todo id here");
@@ -14,6 +15,19 @@ export default function TodoListDetailsScreen({ navigation, route }) {
         }}
         value={todoId}
         onChangeText={(text) => setTodoId(text)}
+      />
+      <Button
+        title="Delete the ToDo now!"
+        onPress={() => {}}
+        icon={
+          <Icon
+            name="trash"
+            type="entypo"
+            onPress={() => {
+              console.log("deleting todo");
+            }}
+          />
+        }
       />
     </View>
   );

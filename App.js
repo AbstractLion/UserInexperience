@@ -14,15 +14,15 @@ export default function App() {
   const [todos, setTodos] = useState([
     {
       name: "Example To-do",
-      id: cuid(),
+      id: cuid().slice(6),
     },
     {
       name: "Delete me!",
-      id: cuid(),
+      id: cuid().slice(6),
     },
     {
       name: "This is what a todo looks like.",
-      id: cuid(),
+      id: cuid().slice(6),
     },
   ]);
 
@@ -36,6 +36,7 @@ export default function App() {
               <Stack.Screen
                 name={"TodoListStackNavigator"}
                 component={TodoListStackNavigator}
+                options={{ headerShown: false }}
               />
             </Stack.Navigator>
           </TodoItemsContext.Provider>
