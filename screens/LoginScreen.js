@@ -66,21 +66,6 @@ export default function LoginScreen() {
         value={confirmPass}
         onChangeText={(string) => setConfirmPass(string)}
       />
-      <Button
-        onPress={
-          !buttonPressed
-            ? () => {
-                alert(
-                  `Your email is: ${username}. There is no account associated with this email. Please press this button again to create a new account.`
-                );
-                setButtonPress(true);
-              }
-            : () => {
-                navigation.push("TodoListStackNavigator");
-              }
-        }
-        title={"Log In"}
-      />
     </View>
   );
 }
