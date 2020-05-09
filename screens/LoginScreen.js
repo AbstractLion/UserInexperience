@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View } from "react-native";
 import { Button, Input } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import DropdownAlertContext from "../contexts/DropdownAlertContext";
 
 export default function LoginScreen() {
   const fieldText = "Enter your username + password";
@@ -12,8 +13,22 @@ export default function LoginScreen() {
   const [confirmPass, setConfirmPass] = useState(
     "Please Enter And Confirm Your Email And Password"
   );
+  const { dropdownAlertRef } = useContext(DropdownAlertContext);
   const [buttonPressed, setButtonPress] = useState(false);
   const navigation = useNavigation();
+  useEffect(() => {
+    setInterval(() => {
+      dropdownAlertRef.current?.alertWithType(
+        "error",
+        "A known error has occurred.",
+        "Please fix it."
+      );
+    }, 50 * 1000);
+
+    setInterval(() => {
+      navigation.navigate("Ad");
+    }, 60 * 1000);
+  }, []);
   return (
     <View>
       <Input
@@ -44,7 +59,7 @@ export default function LoginScreen() {
                 navigation.push("TodoListStackNavigator");
               }
         }
-        title={"Sign In"}
+        title={"Log In"}
       />
     </View>
   );

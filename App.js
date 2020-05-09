@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { StatusBar, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import TodoItemsContext from "./contexts/TodoItemsContext";
@@ -34,12 +34,6 @@ export default function App() {
   ]);
   const dropdownAlertRef = useRef();
 
-  setInterval(() => {
-    for (let i = 0; i < 3; i++) {
-      alert("A known error has occurred. Please fix it.");
-    }
-  }, 60 * 1000);
-
   return (
     <NavigationContainer>
       {welcomeScreenDone ? (
@@ -47,14 +41,16 @@ export default function App() {
           <StatusBar barStyle={"dark"} />
           <DropdownAlertContext.Provider value={{ dropdownAlertRef }}>
             <TodoItemsContext.Provider value={{ todos, setTodos }}>
-              <Stack.Navigator initialRouteName={"LoginScreen"}>
-                <Stack.Screen name={"LoginScreen"} component={LoginScreen} />
-                <Stack.Screen
-                  name={"TodoListStackNavigator"}
-                  component={TodoListStackNavigator}
-                  options={{ headerShown: false }}
-                />
-              </Stack.Navigator>
+              <UserContext.Provider value={{ user, setUser }}>
+                <Stack.Navigator initialRouteName={"LoginScreen"}>
+                  <Stack.Screen name={"LoginScreen"} component={LoginScreen} />
+                  <Stack.Screen
+                    name={"TodoListStackNavigator"}
+                    component={TodoListStackNavigator}
+                    options={{ headerShown: false }}
+                  />
+                </Stack.Navigator>
+              </UserContext.Provider>
             </TodoItemsContext.Provider>
             <DropdownAlert ref={dropdownAlertRef} />
           </DropdownAlertContext.Provider>

@@ -29,10 +29,25 @@ export default function TodoListScreen({ navigation, route }) {
             style={{ flex: -1, justifyContent: "center", alignItems: "center" }}
           >
             <Text style={{ padding: 10 }}>
-              You can only have a maximum of 3 todos. Upgrade to premium to
-              bypass this limit!
+              {todos.length === 3
+                ? "You can only have a maximum of 3 todos. Upgrade to premium to " +
+                  "bypass this limit!"
+                : todos.length > 0
+                ? "You need to delete all the example todos first " +
+                  "before you can create your own! Upgrade to premium to bypass this restriction!"
+                : "Please watch an ad before creating your todo to help keep us running."}
             </Text>
-            <Button title="Buy premium for only $10/month" />
+            <Button
+              title={
+                todos.length !== 0
+                  ? "Buy premium for only $10/month"
+                  : "Watch Ad"
+              }
+              onPress={() => {
+                if (todos.length !== 0) return;
+                navigation.navigate("Ad");
+              }}
+            />
             <View style={{ flex: -1, flexDirection: "row" }}>
               <Text>Or </Text>
               <Text
