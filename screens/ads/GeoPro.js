@@ -3,7 +3,7 @@ import { View, Text } from "react-native";
 import { Dropdown } from "react-native-material-dropdown";
 
 export default function GeoProAd() {
-  const [countries, setCountries] = useState({});
+  const [countries, setCountries] = useState(null);
   const [countryList, setCountryList] = useState([]);
   const [currentCountry, setCurrentCountry] = useState("Canada");
   useEffect(() => {
