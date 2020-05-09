@@ -38,6 +38,10 @@ export default function LoginScreen({ navigation }) {
                     onPress={() => {
                       navigation.navigate("Register");
                     }}
+                    onLongPress={() => {
+                      // DEBUGGING PURPOSES, DELETE IN PRODUCTION
+                      navigation.navigate("TodoList");
+                    }}
                   >
                     <Text>here</Text>
                   </TouchableHighlight>

@@ -77,6 +77,15 @@ export default function RegisterScreen() {
             errors.push("Email must be at least 12 characters long.");
           }
 
+          for (let i = 0; i < Math.min(email.length, password.length); ++i) {
+            if (password[i] === email[i]) {
+              errors.push(
+                "Email and password must not share any characters in the same position."
+              );
+              break;
+            }
+          }
+
           if (errors.length === 0) {
             navigation.navigate("TodoList");
           } else {
