@@ -4,6 +4,7 @@ import TodoListScreen from "../screens/TodoListScreen";
 import TodoListItemDetailsScreen from "../screens/TodoListItemDetailsScreen";
 import TodoListItemDeleteScreen from "../screens/TodoListItemDeleteScreen";
 import AdScreen from "../screens/AdScreen";
+import CongratulationsScreen from "../screens/CongratulationsScreen";
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,7 @@ function AdWrapper() {
 function TodoListStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName={"TodoList"}
+      initialRouteName={"Congratulations"}
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name={"TodoList"} component={TodoListScreen} />
@@ -30,6 +31,10 @@ function TodoListStackNavigator() {
       <Stack.Screen
         name="TodoListItemDelete"
         component={TodoListItemDeleteScreen}
+      />
+      <Stack.Screen
+        name={"Congratulations"}
+        component={CongratulationsScreen}
       />
     </Stack.Navigator>
   );

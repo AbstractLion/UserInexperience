@@ -38,7 +38,7 @@ export default function App() {
     <NavigationContainer>
       {welcomeScreenDone ? (
         <>
-          <StatusBar barStyle={"dark"} />
+          <StatusBar barStyle={"dark-content"} backgroundColor={"#ffffff"}/>
           <DropdownAlertContext.Provider value={{ dropdownAlertRef }}>
             <TodoItemsContext.Provider value={{ todos, setTodos }}>
               <UserContext.Provider value={{ user, setUser }}>
