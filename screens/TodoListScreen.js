@@ -35,17 +35,17 @@ export default function TodoListScreen({ navigation, route }) {
                 : todos.length > 0
                 ? "You need to delete all the example todos first " +
                   "before you can create your own! Upgrade to premium to bypass this restriction!"
-                : "Please watch an ad before creating your todo to help keep us running."}
+                : "Are you sure? This change is not irreversable."}
             </Text>
             <Button
               title={
                 todos.length !== 0
                   ? "Buy premium for only $10/month"
-                  : "Watch Ad"
+                  : "I don't care."
               }
               onPress={() => {
                 if (todos.length !== 0) return;
-                navigation.navigate("Ad");
+                navigation.navigate("TodoListItemCreateScreen");
               }}
             />
             <View style={{ flex: -1, flexDirection: "row" }}>
@@ -57,7 +57,7 @@ export default function TodoListScreen({ navigation, route }) {
               </Text>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate("TodoListItemDelete");
+                  navigation.navigate("TodoListDelete");
                 }}
               >
                 <Text> here </Text>

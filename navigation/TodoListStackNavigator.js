@@ -2,7 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import TodoListScreen from "../screens/TodoListScreen";
 import TodoListItemDetailsScreen from "../screens/TodoListItemDetailsScreen";
-import TodoListItemDeleteScreen from "../screens/TodoListItemDeleteScreen";
+import TodoListDeleteScreen from "../screens/TodoListDeleteScreen";
 import AdScreen from "../screens/AdScreen";
 import CongratulationsScreen from "../screens/CongratulationsScreen";
 
@@ -28,10 +28,7 @@ function TodoListStackNavigator() {
         name={"TodoListItemDetails"}
         component={TodoListItemDetailsScreen}
       />
-      <Stack.Screen
-        name="TodoListItemDelete"
-        component={TodoListItemDeleteScreen}
-      />
+      <Stack.Screen name="TodoListDelete" component={TodoListDeleteScreen} />
       <Stack.Screen
         name={"Congratulations"}
         component={CongratulationsScreen}

@@ -54,12 +54,12 @@ export default function LoginScreen({ navigation }) {
           } else {
             setErrors(
               errors.map((error, i) => (
-                <Textsceren
+                <Text
                   style={{ color: "red", marginTop: 10 }}
                   key={i.toString()}
                 >
                   {error}
-                </Textsceren>
+                </Text>
               ))
             );
           }
