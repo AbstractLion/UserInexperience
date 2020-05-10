@@ -1,11 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableHighlight,
-  Image,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Overlay, Button, Icon, Input } from "react-native-elements";
 import DropdownAlertContext from "../contexts/DropdownAlertContext";
 import TodoItemsContext from "../contexts/TodoItemsContext";
@@ -68,14 +62,14 @@ export default function TodoListDetailsScreen({ navigation, route }) {
           <View>
             <View style={{ flex: -1, flexDirection: "row" }}>
               <Text>Are you sure? Answer </Text>
-              <TouchableHighlight
+              <TouchableOpacity
                 onPress={async () => {
                   await deleteTodo();
                   setOverlayVisibility(false);
                 }}
               >
                 <Text>yes</Text>
-              </TouchableHighlight>
+              </TouchableOpacity>
               <Text> if you wish to delete this todo.</Text>
             </View>
             <View
@@ -177,7 +171,7 @@ export default function TodoListDetailsScreen({ navigation, route }) {
         }}
       >
         <Text>You have </Text>
-        <TouchableHighlight
+        <TouchableOpacity
           onPress={() => {
             if (user.remainingDeletions === 0) {
               setUser({ ...user, remainingDeletions: 1 });
@@ -185,16 +179,14 @@ export default function TodoListDetailsScreen({ navigation, route }) {
           }}
         >
           <Text>{user.remainingDeletions}</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
         <Text> deletions left.</Text>
       </View>
       <View style={{ flex: -1, flexDirection: "row" }}>
         <Text>You can buy more deletions by pressing </Text>
-        <TouchableHighlight
-          onPress={() => setDeletionPayOverlayVisibility(true)}
-        >
+        <TouchableOpacity onPress={() => setDeletionPayOverlayVisibility(true)}>
           <Text>here.</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     </View>
   );

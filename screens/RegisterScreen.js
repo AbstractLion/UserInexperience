@@ -14,19 +14,7 @@ export default function RegisterScreen() {
   const { dropdownAlertRef } = useContext(DropdownAlertContext);
   const [errors, setErrors] = useState([]);
   const navigation = useNavigation();
-  useEffect(() => {
-    setInterval(() => {
-      dropdownAlertRef.current?.alertWithType(
-        "error",
-        "A known error has occurred.",
-        "Please fix it."
-      );
-    }, 50 * 1000);
 
-    setInterval(() => {
-      navigation.navigate("Ad");
-    }, 60 * 1000);
-  }, []);
   return (
     <View style={{ flex: 1 }}>
       <Text style={{ fontSize: 30, fontWeight: "bold", textAlign: "center" }}>
@@ -53,8 +41,10 @@ export default function RegisterScreen() {
         secureTextEntry
         onChangeText={(string) => setConfirmPass(string)}
       />
-      {errors.map((error) => (
-        <Text style={{ color: "red" }}>{error}</Text>
+      {errors.map((error, i) => (
+        <Text style={{ color: "red" }} key={i.toString()}>
+          {error}
+        </Text>
       ))}
       <Button
         onPress={() => {

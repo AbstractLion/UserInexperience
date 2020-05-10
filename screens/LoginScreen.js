@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, TouchableHighlight } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 
 export default function LoginScreen({ navigation }) {
@@ -22,7 +22,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={{ flex: 1, padding: 20 }}>
-      <TouchableHighlight
+      <TouchableOpacity
         onPress={() => {
           const errors = [];
           if (!isEmailEmpty) errors.push("Email must not be empty.");
@@ -33,8 +33,10 @@ export default function LoginScreen({ navigation }) {
                 <Text>Account not found in our system.</Text>
                 <View style={{ flex: -1, flexDirection: "row" }}>
                   <Text>Don't have an account? </Text>
-                  <Text style={{ textDecoration: "underline" }}>Click </Text>
-                  <TouchableHighlight
+                  <Text style={{ textDecorationLine: "underline" }}>
+                    Click{" "}
+                  </Text>
+                  <TouchableOpacity
                     onPress={() => {
                       navigation.navigate("Register");
                     }}
@@ -44,15 +46,20 @@ export default function LoginScreen({ navigation }) {
                     }}
                   >
                     <Text>here</Text>
-                  </TouchableHighlight>
+                  </TouchableOpacity>
                   <Text> to create one.</Text>
                 </View>
               </>,
             ]);
           } else {
             setErrors(
-              errors.map((error) => (
-                <Text style={{ color: "red", marginTop: 10 }}>{error}</Text>
+              errors.map((error, i) => (
+                <Textsceren
+                  style={{ color: "red", marginTop: 10 }}
+                  key={i.toString()}
+                >
+                  {error}
+                </Textsceren>
               ))
             );
           }
@@ -61,7 +68,7 @@ export default function LoginScreen({ navigation }) {
         <Text style={{ fontSize: 30, fontWeight: "bold", textAlign: "center" }}>
           Login
         </Text>
-      </TouchableHighlight>
+      </TouchableOpacity>
       <Input
         label="Email"
         disabled={isEmailDisabled}

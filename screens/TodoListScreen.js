@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { FlatList, Text, TouchableHighlight, View } from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { ListItem, Icon, Overlay, Button } from "react-native-elements";
 import { FloatingAction } from "react-native-floating-action";
 import TodoItemsContext from "../contexts/TodoItemsContext";
@@ -55,13 +55,13 @@ export default function TodoListScreen({ navigation, route }) {
               >
                 press
               </Text>
-              <TouchableHighlight
+              <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("TodoListItemDelete");
                 }}
               >
                 <Text> here </Text>
-              </TouchableHighlight>
+              </TouchableOpacity>
               <Text style={{ color: "red" }}>to delete a </Text>
               <Text>todo</Text>
             </View>
