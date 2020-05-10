@@ -19,8 +19,6 @@ export default class Leaderboard extends Component {
     prevData: null
   };
 
-  currentCount = 6;
-
   static propTypes = {
     ...ViewPropTypes,
     //required
@@ -42,7 +40,7 @@ export default class Leaderboard extends Component {
     evenRowColor: PropTypes.string
   };
 
-  defaultRenderItem = (item, index) => {
+  defaultRenderItem = (item, index, currentCount) => {
     const sortBy = this.props.sortBy;
     const evenColor = this.props.evenRowColor || evenRowColor;
     const oddColor = this.props.oddRowColor || oddRowColor;
@@ -58,7 +56,7 @@ export default class Leaderboard extends Component {
               index < 9 ? styles.singleDidget : styles.doubleDidget
             ]}
           >
-            {this.currentCount--}
+            {currentCount.value--}
           </Text>
           {this.props.icon && (
             <Image
@@ -88,10 +86,10 @@ export default class Leaderboard extends Component {
     );
   };
 
-  renderItem = ({ item, index }) => {
+  renderItem = ({ item, index }, currentCount) => {
     return this.props.renderItem
       ? this.props.renderItem(item, index)
-      : this.defaultRenderItem(item, index);
+      : this.defaultRenderItem(item, index, currentCount);
   };
 
   componentDidMount() {
@@ -112,12 +110,12 @@ export default class Leaderboard extends Component {
 
   render() {
     const { sortedData } = this.state;
-
+    let currentCount = {value:3};
     return (
       <FlatList
         data={sortedData}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={data => this.renderItem(data)}
+        renderItem={data => this.renderItem(data, currentCount)}
         inverted
       />
     );
