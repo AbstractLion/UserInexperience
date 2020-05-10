@@ -5,6 +5,7 @@ import TodoListItemDetailsScreen from "../screens/TodoListItemDetailsScreen";
 import TodoListDeleteScreen from "../screens/TodoListDeleteScreen";
 import AdScreen from "../screens/AdScreen";
 import CongratulationsScreen from "../screens/CongratulationsScreen";
+import TodoListCreateScreen from "../screens/TodoListCreateScreen";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ function TodoListStackNavigator() {
         component={TodoListItemDetailsScreen}
       />
       <Stack.Screen name="TodoListDelete" component={TodoListDeleteScreen} />
+      <Stack.Screen name="TodoListCreate" component={TodoListCreateScreen} />
       <Stack.Screen
         name={"Congratulations"}
         component={CongratulationsScreen}

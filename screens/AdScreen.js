@@ -8,7 +8,6 @@ const ads = [GeoProAd, WordOfTheDayAd];
 export default function AdScreen({ navigation, route }) {
   const { user, setUser } = useContext(UserContext);
 
-  console.log("hi");
   useEffect(() => {
     return () => setUser({ ...user, adPosition: user.adPosition + 1 });
   }, []);

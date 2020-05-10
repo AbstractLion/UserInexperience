@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
 import Leaderboard from "../components/Leaderboard";
-import { Avatar } from "react-native-elements";
+import { Avatar, SocialIcon } from "react-native-elements";
 
 const leaderboard = {
   top3: [
@@ -77,6 +77,18 @@ export default function CongratulationsScreen() {
         labelBy={"username"}
         sortBy={"time"}
       />
+      <View
+        style={{
+          flex: -1,
+          flexDirection: "row",
+          width: "100%",
+          justifyContext: "space-around",
+        }}
+      >
+        <SocialIcon type={"twitter"} />
+        <SocialIcon type={"facebook"} />
+        <SocialIcon type={"instagram"} />
+      </View>
     </View>
   );
 }

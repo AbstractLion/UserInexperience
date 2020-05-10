@@ -39,7 +39,7 @@ export default function WordOfTheDayAd() {
           {word}
         </Text>
       ) : (
-        <ActivityIndicator />
+        <ActivityIndicator style={{ margin: 20 }} />
       )}
       <Text style={{ textAlign: "center" }}>
         Acuminate your lexicon with us @ acuminateyourlexicon.online

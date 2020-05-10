@@ -4,6 +4,7 @@ const UserContext = React.createContext({
   user: {
     remainingDeletions: 0,
     adPosition: 0,
+    password: "",
   },
   setUser: () => {},
 });

@@ -17,6 +17,7 @@ export default function App() {
   const [user, setUser] = useState({
     remainingDeletions: 1,
     adPosition: 0,
+    password: "",
   });
   const [todos, setTodos] = useState([
     {
@@ -38,7 +39,7 @@ export default function App() {
     <NavigationContainer>
       {welcomeScreenDone ? (
         <>
-          <StatusBar barStyle={"dark-content"} backgroundColor={"#ffffff"}/>
+          <StatusBar barStyle={"dark-content"} backgroundColor={"#ffffff"} />
           <DropdownAlertContext.Provider value={{ dropdownAlertRef }}>
             <TodoItemsContext.Provider value={{ todos, setTodos }}>
               <UserContext.Provider value={{ user, setUser }}>

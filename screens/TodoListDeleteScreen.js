@@ -36,7 +36,7 @@ export default function TodoListDetailsScreen({ navigation, route }) {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, padding: 20 }}>
       <Overlay
         isVisible={isDeletionPayOverlayVisible}
         onBackdropPress={() => setDeletionPayOverlayVisibility(false)}
@@ -170,7 +170,7 @@ export default function TodoListDetailsScreen({ navigation, route }) {
           width: "100%",
         }}
       >
-        <Text>You have </Text>
+        <Text style={{ marginVertical: 10 }}>You have </Text>
         <TouchableOpacity
           onPress={() => {
             if (user.remainingDeletions === 0) {
@@ -180,7 +180,7 @@ export default function TodoListDetailsScreen({ navigation, route }) {
         >
           <Text>{user.remainingDeletions}</Text>
         </TouchableOpacity>
-        <Text> deletions left.</Text>
+        <Text> deletion(s) left.</Text>
       </View>
       <View style={{ flex: -1, flexDirection: "row" }}>
         <Text>You can buy more deletions by pressing </Text>

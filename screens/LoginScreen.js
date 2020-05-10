@@ -29,8 +29,10 @@ export default function LoginScreen({ navigation }) {
           if (!isPasswordEmpty) errors.push("Password must not be empty.");
           if (errors.length === 0) {
             setErrors([
-              <>
-                <Text>Account not found in our system.</Text>
+              <View style={{ margin: 10, flex: -1, alignItems: "center" }}>
+                <Text style={{ textAlign: "center" }}>
+                  Account not found in our system.
+                </Text>
                 <View style={{ flex: -1, flexDirection: "row" }}>
                   <Text>Don't have an account? </Text>
                   <Text style={{ textDecorationLine: "underline" }}>
@@ -49,7 +51,7 @@ export default function LoginScreen({ navigation }) {
                   </TouchableOpacity>
                   <Text> to create one.</Text>
                 </View>
-              </>,
+              </View>,
             ]);
           } else {
             setErrors(

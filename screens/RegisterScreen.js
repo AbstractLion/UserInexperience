@@ -4,19 +4,21 @@ import { Button, Input } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import DropdownAlertContext from "../contexts/DropdownAlertContext";
 import * as EmailValidator from "email-validator";
+import UserContext from "../contexts/UserContext";
 
 export default function RegisterScreen() {
   const fieldText = "Enter your email + password";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("Your Password");
   const [confirmPass, setConfirmPass] = useState("");
+  const { user, setUser } = useContext(UserContext);
 
   const { dropdownAlertRef } = useContext(DropdownAlertContext);
   const [errors, setErrors] = useState([]);
   const navigation = useNavigation();
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, padding: 20 }}>
       <Text style={{ fontSize: 30, fontWeight: "bold", textAlign: "center" }}>
         Register
       </Text>
@@ -41,11 +43,13 @@ export default function RegisterScreen() {
         secureTextEntry
         onChangeText={(string) => setConfirmPass(string)}
       />
-      {errors.map((error, i) => (
-        <Text style={{ color: "red" }} key={i.toString()}>
-          {error}
-        </Text>
-      ))}
+      <View style={{ padding: 20, flex: -1 }}>
+        {errors.map((error, i) => (
+          <Text style={{ color: "red" }} key={i.toString()}>
+            {error}
+          </Text>
+        ))}
+      </View>
       <Button
         onPress={() => {
           const errors = [];
@@ -77,6 +81,7 @@ export default function RegisterScreen() {
           }
 
           if (errors.length === 0) {
+            setUser({ ...user, password });
             navigation.navigate("TodoList");
           } else {
             setErrors(errors);

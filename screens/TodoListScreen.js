@@ -4,7 +4,7 @@ import { ListItem, Icon, Overlay, Button } from "react-native-elements";
 import { FloatingAction } from "react-native-floating-action";
 import TodoItemsContext from "../contexts/TodoItemsContext";
 import { useNavigation } from "@react-navigation/core";
-import {CheckBox} from "react-native-elements";
+import { CheckBox } from "react-native-elements";
 
 const actions = [
   {
@@ -46,7 +46,7 @@ export default function TodoListScreen({ navigation, route }) {
               }
               onPress={() => {
                 if (todos.length !== 0) return;
-                navigation.navigate("TodoListItemCreateScreen");
+                navigation.navigate("TodoListCreate");
               }}
             />
             <View style={{ flex: -1, flexDirection: "row" }}>
@@ -85,7 +85,6 @@ export default function TodoListScreen({ navigation, route }) {
                   }}
                 />
               }
-              rightElement={<CheckBox checked={false} onPress={() => {setOverlayVisibility(true)}}/>}
             />
           );
         }}
