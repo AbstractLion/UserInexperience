@@ -20,7 +20,7 @@ function AdWrapper() {
 function TodoListStackNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName={"Congratulations"}
+      initialRouteName={"TodoList"}
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name={"TodoList"} component={TodoListScreen} />
