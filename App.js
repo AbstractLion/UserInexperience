@@ -16,6 +16,7 @@ export default function App() {
   const [welcomeScreenDone, setWelcomeScreenDone] = useState(false);
   const [user, setUser] = useState({
     remainingDeletions: 1,
+    adPosition: 0,
   });
   const [todos, setTodos] = useState([
     {
