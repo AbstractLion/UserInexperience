@@ -8,9 +8,10 @@ import RegisterScreen from "../screens/RegisterScreen";
 import DropdownAlertContext from "../contexts/DropdownAlertContext";
 import { useNavigation } from "@react-navigation/core";
 import { Icon } from "react-native-elements";
+import CongratulationsScreen from "../screens/CongratulationsScreen";
 const AdStack = createStackNavigator();
 
-const timeRef = React.createRef();
+export const timeRef = React.createRef();
 
 function StopwatchHeader() {
   const [time, setTime] = useState(timeRef.current);
@@ -127,6 +128,10 @@ function RootNavigator({ navigation }) {
       <Stack.Screen name={"Login"} component={LoginScreen} />
       <Stack.Screen name={"Register"} component={RegisterScreen} />
       <Stack.Screen name={"TodoList"} component={TodoListStackNavigator} />
+      <Stack.Screen
+        name={"Congratulations"}
+        component={CongratulationsScreen}
+      />
     </Stack.Navigator>
   );
 }

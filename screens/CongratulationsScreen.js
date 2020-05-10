@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { View, Text, Image } from "react-native";
 import Leaderboard from "../components/Leaderboard";
 import { Avatar, SocialIcon } from "react-native-elements";
+import { timeRef } from "../navigation/RootNavigator";
 
 const leaderboard = {
   top3: [
@@ -11,12 +12,12 @@ const leaderboard = {
       avatar: "",
     },
     {
-      username: "Avaneesh",
+      username: "AvanRocks",
       time: 320,
       avatar: "",
     },
     {
-      username: "LeonZaLion",
+      username: "Bobluge Togonom",
       time: 458,
       avatar: "",
     },
@@ -24,7 +25,13 @@ const leaderboard = {
   yourRanking: 40,
 };
 
-export default function CongratulationsScreen() {
+export default function CongratulationsScreen({ navigation }) {
+  useLayoutEffect(() => {
+    navigation
+      .dangerouslyGetParent()
+      ?.setOptions({ headerTitle: "Congratulations!" });
+  }, []);
+
   return (
     <View>
       <View
@@ -68,7 +75,10 @@ export default function CongratulationsScreen() {
           <Text
             style={{ color: "white", fontSize: 25, flex: 1, marginLeft: 40 }}
           >
-            24:30
+            {Math.floor(timeRef.current / 60)
+              .toString()
+              .padStart(1, "0")}
+            :{(timeRef.current % 60).toString().padStart(2, "0")}
           </Text>
         </View>
       </View>
@@ -77,12 +87,22 @@ export default function CongratulationsScreen() {
         labelBy={"username"}
         sortBy={"time"}
       />
+      <Text
+        style={{
+          textAlign: "center",
+          fontWeight: "bold",
+          fontSize: 30,
+          margin: 10,
+        }}
+      >
+        Share your misery!
+      </Text>
       <View
         style={{
           flex: -1,
           flexDirection: "row",
           width: "100%",
-          justifyContext: "space-around",
+          justifyContent: "space-around",
         }}
       >
         <SocialIcon type={"twitter"} />

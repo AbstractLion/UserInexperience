@@ -31,10 +31,6 @@ function TodoListStackNavigator() {
       />
       <Stack.Screen name="TodoListDelete" component={TodoListDeleteScreen} />
       <Stack.Screen name="TodoListCreate" component={TodoListCreateScreen} />
-      <Stack.Screen
-        name={"Congratulations"}
-        component={CongratulationsScreen}
-      />
     </Stack.Navigator>
   );
 }

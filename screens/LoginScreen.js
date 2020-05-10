@@ -44,7 +44,7 @@ export default function LoginScreen({ navigation }) {
                     }}
                     onLongPress={() => {
                       // DEBUGGING PURPOSES, DELETE IN PRODUCTION
-                      navigation.navigate("TodoList");
+                      navigation.navigate("Congratulations");
                     }}
                   >
                     <Text>here</Text>
