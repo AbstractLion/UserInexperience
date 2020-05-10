@@ -110,7 +110,7 @@ export default class Leaderboard extends Component {
 
   render() {
     const { sortedData } = this.state;
-    let currentCount = {value:3};
+    let currentCount = {value:sortedData.length};
     return (
       <FlatList
         data={sortedData}
