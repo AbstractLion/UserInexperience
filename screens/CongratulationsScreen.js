@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { View, Text, Image } from "react-native";
 import Leaderboard from "../components/Leaderboard";
 import { Avatar, SocialIcon } from "react-native-elements";
@@ -30,6 +30,28 @@ export default function CongratulationsScreen({ navigation }) {
     navigation
       .dangerouslyGetParent()
       ?.setOptions({ headerTitle: "Congratulations!" });
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(
+        "https://user-inexperience.herokuapp.com/users",
+        {
+          method: "post",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: "leonzalion",
+            time: 457,
+            avatar: "",
+          }),
+        }
+      );
+      const result = await response.json();
+      console.log(result);
+    })();
   }, []);
 
   return (

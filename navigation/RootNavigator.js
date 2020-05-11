@@ -104,6 +104,7 @@ function AdWrapper() {
 const Stack = createStackNavigator();
 
 function RootNavigator({ navigation }) {
+  timeRef.current = 500;
   const { dropdownAlertRef } = useContext(DropdownAlertContext);
 
   useEffect(() => {
